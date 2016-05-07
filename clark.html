@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+ 
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+ 
+        <title>this's clark's demo</title>
+        <meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,minimal-ui">
+    </head>
+    <body>
+        <div>
+	     <!--下载地址-->
+            <input id="download" type="hidden" value="clark-demo.apk"/>
+
+        </div>
+ 
+        <script>
+            (function(){
+                var ua = navigator.userAgent.toLowerCase();
+                var t;
+                var config = {
+                    scheme_IOS: 'clarkwu://',//ios我不知道
+                    scheme_Adr: 'clarkwu://jump?message=123456',//后面message是跟我这边协议好的参数，可以是进房间代码哦
+                    download_url: document.getElementById('download').value,
+                    timeout: 1000
+                };
+ 
+                function openclient() {
+                    var startTime = Date.now();
+ 
+                    var ifr = document.createElement('iframe');
+ 
+ 
+                    ifr.src = ua.indexOf('os') > 0 ? config.scheme_IOS : config.scheme_Adr;
+                    ifr.style.display = 'none';
+                    document.body.appendChild(ifr);
+ 
+                    var t = setTimeout(function() {
+                        var endTime = Date.now();
+ 
+                        if (!startTime || endTime - startTime < config.timeout + 200) { 
+                            window.location = config.download_url;
+                        } else {
+                             
+                        }
+                    }, config.timeout);
+ 
+                    window.onblur = function() {
+                        clearTimeout(t);
+                    }
+                }
+
+		openclient();
+
+            })()
+        </script>
+    </body>
+</html>
